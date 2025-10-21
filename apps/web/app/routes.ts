@@ -15,8 +15,8 @@ export default [
     ]),
   ]),
   // From Studio layout, because of Visual Editing
-  route("studio/*", "routes/studio.tsx"),
-  // Resource routes
+  // route("studio/*", "routes/studio.tsx"),
+  // // Resource routes
   ...prefix("resource", [
     route("og", "./routes/resource/og.ts"),
     route("preview", "./routes/resource/preview.ts"),

@@ -9,15 +9,15 @@ import { recordStubsZ } from "~/types/record";
 
 import type { Route } from "./+types";
 
-export const meta = ({ matches }: Route.MetaArgs) => {
-  const layoutData = matches.find(
-    (match) => match.id === "routes/website/layout"
-  )?.data;
-  const home = layoutData ? layoutData.initial.data : null;
-  const title = [home?.title, home?.siteTitle].filter(Boolean).join(" | ");
+// export const meta = ({ matches }: Route.MetaArgs) => {
+//   const layoutData = matches.find(
+//     (match) => match.id === "routes/website/layout"
+//   )?.data;
+//   const home = layoutData ? layoutData.initial.data : null;
+//   const title = [home?.title, home?.siteTitle].filter(Boolean).join(" | ");
 
-  return [{ title }];
-};
+//   return [{ title }];
+// };
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { options } = await loadQueryOptions(request.headers);

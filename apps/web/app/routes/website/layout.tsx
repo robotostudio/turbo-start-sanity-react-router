@@ -1,17 +1,15 @@
 import { useQuery } from "@sanity/react-loader";
 import { VisualEditing } from "@sanity/visual-editing/react-router";
 import { lazy, Suspense } from "react";
-import { Outlet, useLocation, useOutletContext } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 import { Footer } from "~/components/Footer";
-import { Header } from "~/components/Header";
 import { Title } from "~/components/Title";
 import { loadQuery } from "~/sanity/loader.server";
 import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
 import { HOME_QUERY } from "~/sanity/queries";
 import type { HomeDocument } from "~/types/home";
 import { homeZ } from "~/types/home";
-import type { ThemePreference } from "~/types/themePreference";
 
 import type { Route } from "./+types/layout";
 
@@ -53,12 +51,12 @@ export default function Website({ loaderData }: Route.ComponentProps) {
     initial,
   });
   const { pathname } = useLocation();
-  const context = useOutletContext<{ theme: ThemePreference } | null>();
-  const theme = context ? context.theme : "light";
+  // const context = useOutletContext<{ theme: ThemePreference } | null>();
+  // const theme = context ? context.theme : "light";
 
   return (
     <>
-      <Header home={home} theme={theme} />
+      {/* <Header home={home} theme={theme} /> */}
       <div className="container mx-auto grid grid-cols-1 gap-4 p-4 lg:gap-12 lg:p-12">
         {home?.title && pathname === "/" ? <Title>{home?.title}</Title> : null}
         <Outlet />
