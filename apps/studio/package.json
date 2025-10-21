@@ -1,5 +1,5 @@
 {
-  "name": "turbo-start-sanity",
+  "name": "studio",
   "private": true,
   "version": "1.0.0",
   "main": "package.json",
@@ -9,29 +9,42 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "lint": "npx ultracite lint",
+    "format": "npx ultracite fix",
+    "deploy-graphql": "sanity graphql deploy",
+    "extract": "sanity schema extract --enforce-required-fields",
+    "check-types": "tsc --noEmit",
+    "check": "npm run lint && npm run check-types",
+    "type": "sanity schema extract --enforce-required-fields && sanity typegen generate",
+    "postinstall": "sanity exec scripts/cli-alert-for-data.ts"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^4.10.3",
+    "@sanity/assist": "^5.0.0",
+    "@sanity/client": "^7.8.2",
+    "@sanity/functions": "^1.0.3",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/orderable-document-list": "^1.4.0",
+    "@sanity/ui": "^3.0.7",
+    "@sanity/uuid": "^3.0.2",
+    "@sanity/vision": "^4.4.1",
+    "friendlier-words": "^1.1.3",
+    "lucide-react": "^0.539.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^4.10.3",
-    "styled-components": "^6.1.18"
+    "sanity": "^4.4.1",
+    "sanity-plugin-asset-source-unsplash": "^4.0.1",
+    "sanity-plugin-icon-picker": "^4.0.0",
+    "sanity-plugin-media": "^4.0.0",
+    "slugify": "^1.6.6",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^5.0.2",
+    "@biomejs/biome": "2.2.6",
+    "@sanity/blueprints": "0.2.0",
     "@types/react": "^19.1",
-    "eslint": "^9.28",
-    "prettier": "^3.5",
-    "typescript": "^5.8"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
+    "ultracite": "5.6.4"
   }
 }

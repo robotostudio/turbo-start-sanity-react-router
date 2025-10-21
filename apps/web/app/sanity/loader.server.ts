@@ -1,4 +1,5 @@
-import * as queryStore from '@sanity/react-loader'
+// biome-ignore lint/performance/noNamespaceImport: Allow the namespace import
+import * as queryStore from "@sanity/react-loader";
 
 import {client} from '~/sanity/client'
 import {STUDIO_BASEPATH} from './constants'

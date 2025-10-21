@@ -1,1 +1,1 @@
-export const STUDIO_BASEPATH = `/studio`
+export const STUDIO_BASEPATH = "/studio";
