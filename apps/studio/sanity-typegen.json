@@ -1,6 +1,6 @@
 {
-  "path": "'../web/src/**/*.{ts,tsx,js,jsx}'",
+  "path": "'../web/app/**/*.{ts,tsx,js,jsx}'",
   "schema": "schema.json",
-  "generates": "../web/src/lib/sanity/sanity.types.ts",
+  "generates": "../web/app/sanity/sanity.types.ts",
   "overloadClientMethods": true
 }

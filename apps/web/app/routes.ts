@@ -10,9 +10,9 @@ export default [
   // Separate front-end website layout
   layout("./routes/website/layout.tsx", [
     index("./routes/website/index.tsx"),
-    ...prefix("records", [
-      route(":slug", "./routes/website/records/$slug.tsx"),
-    ]),
+    // ...prefix("records", [
+    //   route(":slug", "./routes/website/records/$slug.tsx"),
+    // ]),
   ]),
   // From Studio layout, because of Visual Editing
   // route("studio/*", "routes/studio.tsx"),

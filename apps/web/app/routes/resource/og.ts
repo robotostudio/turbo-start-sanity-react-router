@@ -28,16 +28,16 @@ export const loader = async ({request}: Route.LoaderArgs) => {
   const png = await generatePngFromDocument(doc, origin)
 
   // Respond with the PNG buffer
-  return new Response(png, {
+  return new Response(Buffer.from(png), {
     status: 200,
     headers: {
       // Tell the browser the response is an image
-      'Content-Type': 'image/png',
+      "Content-Type": "image/png",
       // Optional caching settings
-      'cache-control':
-        process.env.NODE_ENV === 'development'
-          ? 'no-cache'
-          : 'public, immutable, no-transform, max-age=31536000',
+      "cache-control":
+        process.env.NODE_ENV === "development"
+          ? "no-cache"
+          : "public, immutable, no-transform, max-age=31536000",
     },
-  })
+  });
 }

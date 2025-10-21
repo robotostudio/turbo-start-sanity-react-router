@@ -1,12 +1,8 @@
 import { useQuery } from "@sanity/react-loader";
-
-import { Records } from "~/components/Records";
 import { loadQuery } from "~/sanity/loader.server";
 import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
-import { RECORDS_QUERY } from "~/sanity/queries";
-import type { RecordStub } from "~/types/record";
-import { recordStubsZ } from "~/types/record";
-
+import { queryHomePageData } from "~/sanity/queries";
+import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
 import type { Route } from "./+types";
 
 // export const meta = ({ matches }: Route.MetaArgs) => {
@@ -21,25 +17,24 @@ import type { Route } from "./+types";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { options } = await loadQueryOptions(request.headers);
-  const query = RECORDS_QUERY;
   const params = {};
-  const initial = await loadQuery<RecordStub[]>(query, params, options).then(
-    (res) => ({
-      ...res,
-      data: res.data ? recordStubsZ.parse(res.data) : null,
-    })
+  const initial = await loadQuery<QueryHomePageDataResult>(
+    queryHomePageData,
+    params,
+    options
   );
 
   if (!initial.data) {
     throw new Response("Not found", { status: 404 });
   }
 
-  return { initial, query, params };
+  return { initial, params, query: queryHomePageData };
 };
 
 export default function Index({ loaderData }: Route.ComponentProps) {
-  const { initial, query, params } = loaderData;
+  const { initial, params, query } = loaderData;
   const { data } = useQuery(query, params, { initial });
+  console.log("🚀 ~ Index ~ data:", data);
 
-  return data ? <Records records={data} /> : null;
+  return data ? <div>{data.title}</div> : null;
 }
