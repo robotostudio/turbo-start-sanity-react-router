@@ -1,6 +1,6 @@
-import path from "node:path";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -8,9 +8,8 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   resolve: {
     alias: {
-      "~": path.resolve(import.meta.dirname, "./app"),
+      "~": fileURLToPath(new URL("./app", import.meta.url)),
     },
-    extensions: [".mjs", ".js", ".mts", ".ts", ".jsx", ".tsx", ".json"],
   },
   optimizeDeps: {
     exclude: ["@resvg/resvg-js"],
