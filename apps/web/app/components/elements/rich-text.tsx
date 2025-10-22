@@ -1,14 +1,13 @@
 "use client";
-import { cn } from "@workspace/ui/lib/utils";
-import Link from "next/link";
 import {
   PortableText,
   type PortableTextBlock,
   type PortableTextReactComponents,
-} from "next-sanity";
+} from "@portabletext/react";
+import { cn } from "@workspace/ui/lib/utils";
+import { parseChildrenToSlug } from "@workspace/utils";
 
-import { parseChildrenToSlug } from "@/utils";
-
+import { Link } from "react-router";
 import { SanityImage } from "./sanity-image";
 
 const components: Partial<PortableTextReactComponents> = {
@@ -75,9 +74,8 @@ const components: Partial<PortableTextReactComponents> = {
         <Link
           aria-label={`Link to ${value?.href}`}
           className="underline decoration-dotted underline-offset-2"
-          href={value.href}
-          prefetch={false}
           target={value.openInNewTab ? "_blank" : "_self"}
+          to={value.href}
         >
           {children}
         </Link>

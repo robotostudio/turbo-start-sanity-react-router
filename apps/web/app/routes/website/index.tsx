@@ -1,10 +1,10 @@
 import { useQuery } from "@sanity/react-loader";
+import { PageBuilder } from "~/components/pagebuilder";
 import { loadQuery } from "~/sanity/loader.server";
 import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
 import { queryHomePageData } from "~/sanity/queries";
 import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
 import type { Route } from "./+types";
-
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { options } = await loadQueryOptions(request.headers);
@@ -25,7 +25,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default function Index({ loaderData }: Route.ComponentProps) {
   const { initial, params, query } = loaderData;
   const { data } = useQuery(query, params, { initial });
-  console.log("🚀 ~ Index ~ data:", data);
+  const { pageBuilder, _id, _type } = data ?? {};
+  if (!(pageBuilder && _id && _type)) {
+    return null;
+  }
 
-  return data ? <div>{data.title}</div> : null;
+  return <PageBuilder id={_id} pageBuilder={pageBuilder} type={_type} />;
 }

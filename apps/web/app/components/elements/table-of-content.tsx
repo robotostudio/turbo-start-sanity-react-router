@@ -1,11 +1,10 @@
 "use client";
 import { cn } from "@workspace/ui/lib/utils";
+import { convertToSlug } from "@workspace/utils";
 import { ChevronDown, Circle } from "lucide-react";
-import Link from "next/link";
 import { type FC, useCallback, useMemo } from "react";
-import slugify from "slugify";
-
-import type { SanityRichTextBlock, SanityRichTextProps } from "@/types";
+import { Link } from "react-router";
+import type { SanityRichTextBlock, SanityRichTextProps } from "~/types";
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -74,11 +73,6 @@ const HEADING_LEVELS: Record<HeadingStyle, number> = {
   h6: 6,
 } as const;
 
-const SLUGIFY_OPTIONS = {
-  lower: true,
-  strict: true,
-  remove: /[*+~.()'"!:@]/g,
-} as const;
 
 const DEFAULT_MAX_DEPTH = 6;
 const MIN_HEADINGS_TO_SHOW = 1;
@@ -134,21 +128,6 @@ function isHeadingBlock(block: unknown): block is HeadingBlock {
 // UTILITY FUNCTIONS
 // ============================================================================
 
-function createSlug(text: string): string {
-  if (!text?.trim()) {
-    return "";
-  }
-
-  try {
-    return slugify(text.trim(), SLUGIFY_OPTIONS);
-  } catch (_error) {
-    return text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
-  }
-}
-
 function extractTextFromChildren(children: readonly SanityTextChild[]): string {
   try {
     return children
@@ -162,7 +141,7 @@ function extractTextFromChildren(children: readonly SanityTextChild[]): string {
 }
 
 function generateUniqueId(text: string, index: number, _key?: string): string {
-  const baseId = _key || createSlug(text) || `heading-${index}`;
+  const baseId = _key || convertToSlug(text) || `heading-${index}`;
   return `toc-${baseId}`;
 }
 
@@ -194,7 +173,7 @@ function createProcessedHeading(
     }
 
     const level = HEADING_LEVELS[block.style];
-    const href = `#${createSlug(text)}`;
+    const href = `#${convertToSlug(text)}`;
     const id = generateUniqueId(text, index, block._key);
 
     return {
@@ -366,7 +345,7 @@ const TableOfContentAnchor: FC<AnchorProps> = ({
   maxDepth = DEFAULT_MAX_DEPTH,
   currentDepth = 1,
 }) => {
-  const { href, text, children, isChild, style, id } = heading;
+  const { href, text, children, isChild, id } = heading;
 
   const shouldRenderChildren = useCallback(
     () =>
@@ -411,7 +390,7 @@ const TableOfContentAnchor: FC<AnchorProps> = ({
             "transition-colors duration-200 focus:outline-none",
             "rounded-sm px-1 py-0.5"
           )}
-          href={href}
+          to={href}
         >
           {text}
         </Link>

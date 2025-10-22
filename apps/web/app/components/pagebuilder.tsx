@@ -1,13 +1,21 @@
 "use client";
 
-import { useOptimistic } from "@sanity/visual-editing/react";
-import { createDataAttribute } from "next-sanity";
+import {
+  createDataAttribute,
+  useOptimistic,
+} from "@sanity/visual-editing/react";
+
+// import { createDataAttribute } from "next-sanity";
+// import { useCallback, useMemo } from "react";
+
+// import { dataset, projectId, studioUrl } from "@/config";
+// import type { QueryHomePageDataResult } from "@/lib/sanity/sanity.types";
+// import type { PageBuilderBlockTypes, PagebuilderType } from "~/types";
+
 import { useCallback, useMemo } from "react";
-
-import { dataset, projectId, studioUrl } from "@/config";
-import type { QueryHomePageDataResult } from "@/lib/sanity/sanity.types";
-import type { PageBuilderBlockTypes, PagebuilderType } from "@/types";
-
+import { dataset, projectId, studioUrl } from "~/sanity/projectDetails";
+import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
+import type { PageBuilderBlockTypes, PagebuilderType } from "~/types";
 import { CTABlock } from "./sections/cta";
 import { FaqAccordion } from "./sections/faq-accordion";
 import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
@@ -26,7 +34,6 @@ export type PageBuilderProps = {
   readonly type: string;
 };
 
-
 type SanityDataAttributeConfig = {
   readonly id: string;
   readonly type: string;
@@ -35,21 +42,16 @@ type SanityDataAttributeConfig = {
 
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
-  cta: CTABlock as React.ComponentType<PagebuilderType<"cta">>,
-  faqAccordion: FaqAccordion as React.ComponentType<
-    PagebuilderType<"faqAccordion">
-  >,
-  hero: HeroBlock as React.ComponentType<PagebuilderType<"hero">>,
-  featureCardsIcon: FeatureCardsWithIcon as React.ComponentType<
-    PagebuilderType<"featureCardsIcon">
-  >,
-  subscribeNewsletter: SubscribeNewsletter as React.ComponentType<
-    PagebuilderType<"subscribeNewsletter">
-  >,
-  imageLinkCards: ImageLinkCards as React.ComponentType<
-    PagebuilderType<"imageLinkCards">
-  >,
-} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;
+  cta: CTABlock,
+  faqAccordion: FaqAccordion,
+  hero: HeroBlock,
+  featureCardsIcon: FeatureCardsWithIcon,
+  subscribeNewsletter: SubscribeNewsletter,
+  imageLinkCards: ImageLinkCards,
+} as const satisfies Record<
+  PageBuilderBlockTypes,
+  React.ComponentType<PagebuilderType<PageBuilderBlockTypes>>
+>;
 
 /**
  * Helper function to create consistent Sanity data attributes
@@ -99,7 +101,7 @@ function useOptimisticPageBuilder(
   initialBlocks: PageBuilderBlock[],
   documentId: string
 ) {
-  return useOptimistic<PageBuilderBlock[], any>(
+  return useOptimistic<PageBuilderBlock[], { pageBuilder: PageBuilderBlock[] }>(
     initialBlocks,
     (currentBlocks, action) => {
       if (action.id === documentId && action.document?.pageBuilder) {
@@ -144,7 +146,7 @@ function useBlockRenderer(id: string, type: string) {
           data-sanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
         >
-          <Component {...(block as any)} />
+          <Component {...block} />
         </div>
       );
     },

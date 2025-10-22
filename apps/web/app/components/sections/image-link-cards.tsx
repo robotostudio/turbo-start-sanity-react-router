@@ -1,7 +1,7 @@
 import { Badge } from "@workspace/ui/components/badge";
 import { cn } from "@workspace/ui/lib/utils";
 
-import type { PagebuilderType } from "@/types";
+import type { PagebuilderType } from "~/types";
 
 import { RichText } from "../elements/rich-text";
 import { CTACard } from "../image-link-card";

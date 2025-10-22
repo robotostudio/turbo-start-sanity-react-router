@@ -1,9 +1,9 @@
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
-import Link from "next/link";
 import type { ComponentProps } from "react";
+import { Link } from "react-router";
 
-import type { SanityButtonProps } from "@/types";
+import type { SanityButtonProps } from "~/types";
 
 type SanityButtonsProps = {
   buttons: SanityButtonProps[] | null;
@@ -33,9 +33,9 @@ function SanityButton({
     >
       <Link
         aria-label={`Navigate to ${text}`}
-        href={href || "#"}
         target={openInNewTab ? "_blank" : "_self"}
         title={`Click to visit ${text}`}
+        to={href || "#"}
       >
         {text}
       </Link>

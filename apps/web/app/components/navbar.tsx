@@ -3,19 +3,19 @@
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
+import { Link } from "react-router";
 import useSWR from "swr";
-
 import type {
+  IconPicker,
   QueryGlobalSeoSettingsResult,
   QueryNavbarDataResult,
-} from "@/lib/sanity/sanity.types";
-
+} from "~/sanity/sanity.types";
 import { SanityButtons } from "./elements/sanity-buttons";
 import { SanityIcon } from "./elements/sanity-icon";
-import { Logo } from "./logo";
-import { ModeToggle } from "./mode-toggle";
+
+// import { Logo } from "./logo";
+// import { ModeToggle } from "./mode-toggle";
 
 // Type helpers using utility types
 type NavigationData = {
@@ -37,7 +37,7 @@ type MenuLinkProps = {
   name: string;
   href: string;
   description?: string;
-  icon?: any;
+  icon?: IconPicker | null;
   onClick?: () => void;
 };
 
@@ -54,8 +54,8 @@ function MenuLink({ name, href, description, icon, onClick }: MenuLinkProps) {
   return (
     <Link
       className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent"
-      href={href || "#"}
       onClick={onClick}
+      to={href || "#"}
     >
       {icon && (
         <SanityIcon
@@ -137,14 +137,14 @@ function DesktopColumnLink({
   return (
     <Link
       className="px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground"
-      href={column.href || "#"}
+      to={column.href || "#"}
     >
       {column.name}
     </Link>
   );
 }
 
-function MobileMenu({ navbarData, settingsData }: NavigationData) {
+function MobileMenu({ navbarData }: NavigationData) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -158,7 +158,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
   }
 
   const { columns, buttons } = navbarData || {};
-  const { logo, siteTitle } = settingsData || {};
+  // const { logo, siteTitle } = settingsData || {};
 
   return (
     <>
@@ -179,7 +179,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
           <div className="fixed top-16 left-0 h-[calc(100vh-4rem)] w-full border-r bg-background p-6 shadow-lg">
             <div className="grid gap-6">
               {/* Logo for mobile */}
-              {logo && (
+              {/* {logo && (
                 <div className="flex justify-center border-b pb-4">
                   <Logo
                     alt={siteTitle || ""}
@@ -188,7 +188,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
                     width={120}
                   />
                 </div>
-              )}
+              )} */}
 
               {/* Navigation items */}
               <div className="grid gap-4">
@@ -197,9 +197,9 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
                     return (
                       <Link
                         className="flex items-center py-2 font-medium text-sm transition-colors hover:text-primary"
-                        href={column.href || "#"}
                         key={column._key}
                         onClick={closeMenu}
+                        to={column.href || "#"}
                       >
                         {column.name}
                       </Link>
@@ -248,7 +248,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
               {/* Action buttons */}
               <div className="grid gap-3 border-t pt-4">
                 <div className="flex justify-center">
-                  <ModeToggle />
+                  {/* <ModeToggle /> */}
                 </div>
                 <SanityButtons
                   buttonClassName="w-full justify-center"
@@ -328,7 +328,6 @@ export function Navbar({
   };
   const { navbarData, settingsData } = navigationData;
   const { columns, buttons } = navbarData || {};
-  const { logo, siteTitle } = settingsData || {};
 
   // Show skeleton only on initial mount when no fallback data is available
   if (isLoading && !data && !(initialNavbarData && initialSettingsData)) {
@@ -341,7 +340,7 @@ export function Navbar({
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex h-[40px] w-[120px] items-center">
-            {logo && (
+            {/* {logo && (
               <Logo
                 alt={siteTitle || ""}
                 height={40}
@@ -349,7 +348,7 @@ export function Navbar({
                 priority
                 width={120}
               />
-            )}
+            )} */}
           </div>
 
           {/* Desktop Navigation */}
@@ -369,7 +368,7 @@ export function Navbar({
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-4 md:flex">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <SanityButtons
               buttonClassName="rounded-lg"
               buttons={buttons || []}

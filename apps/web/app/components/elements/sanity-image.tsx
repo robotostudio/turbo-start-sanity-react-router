@@ -4,9 +4,9 @@ import {
   SanityImage as BaseSanityImage,
   type WrapperProps,
 } from "sanity-image";
+import { dataset, projectId } from "~/sanity/projectDetails";
 
-import { dataset, projectId } from "@/config";
-import type { SanityImageProps as SanityImageData } from "@/types";
+import type { SanityImageProps as SanityImageData } from "~/types";
 
 // Types
 type ImageHotspot = {

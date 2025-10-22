@@ -13,7 +13,7 @@ import { themePreferenceCookie } from "~/cookies";
 import { getBodyClassNames } from "~/lib/getBodyClassNames";
 import { projectDetails } from "~/sanity/projectDetails";
 import { themePreference } from "~/types/themePreference";
-import "~/styles/app.css";
+import "@workspace/ui/globals.css";
 
 import type { Route } from "./+types/root";
 

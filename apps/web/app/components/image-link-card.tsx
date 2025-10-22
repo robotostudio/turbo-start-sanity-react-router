@@ -1,8 +1,6 @@
 import { cn } from "@workspace/ui/lib/utils";
-import Link from "next/link";
-
-import type { PagebuilderType } from "@/types";
-
+import { Link } from "react-router";
+import type { PagebuilderType } from "~/types";
 import { SanityImage } from "./elements/sanity-image";
 
 type ImageLinkCard = NonNullable<
@@ -22,7 +20,7 @@ export function CTACard({ card, className }: CTACardProps) {
         "group relative flex flex-col justify-end overflow-hidden rounded-3xl p-4 transition-colors md:p-8 xl:h-[400px]",
         className
       )}
-      href={href ?? "#"}
+      to={href ?? "#"}
     >
       {image?.id && (
         <div className="absolute inset-0 z-[1] mix-blend-multiply">

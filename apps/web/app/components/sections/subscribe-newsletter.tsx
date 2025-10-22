@@ -2,7 +2,7 @@
 import { Button } from "@workspace/ui/components/button";
 import { ChevronRight, LoaderCircle } from "lucide-react";
 import { useFormStatus } from "react-dom";
-import type { PagebuilderType } from "@/types";
+import type { PagebuilderType } from "~/types";
 import { RichText } from "../elements/rich-text";
 
 type SubscribeNewsletterProps = PagebuilderType<"subscribeNewsletter">;
