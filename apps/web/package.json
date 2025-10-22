@@ -21,6 +21,7 @@
     "@sanity/react-loader": "^1.11.22",
     "@sanity/visual-editing": "^3.2.4",
     "@workspace/ui": "workspace:*",
+    "cookie": "^1.0.2",
     "groq": "^4.10.3",
     "isbot": "^5.1.31",
     "lucide-react": "^0.546.0",
