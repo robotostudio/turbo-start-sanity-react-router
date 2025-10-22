@@ -5,12 +5,6 @@ import {
   useOptimistic,
 } from "@sanity/visual-editing/react";
 
-// import { createDataAttribute } from "next-sanity";
-// import { useCallback, useMemo } from "react";
-
-// import { dataset, projectId, studioUrl } from "@/config";
-// import type { QueryHomePageDataResult } from "@/lib/sanity/sanity.types";
-// import type { PageBuilderBlockTypes, PagebuilderType } from "~/types";
 
 import { useCallback, useMemo } from "react";
 import { dataset, projectId, studioUrl } from "~/sanity/projectDetails";
