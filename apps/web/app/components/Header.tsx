@@ -1,6 +1,6 @@
 // import type {LayoutProps} from '~/components/Layout'
-import { Logo } from "~/components/Logo";
-import { ThemeToggle } from "~/components/ThemeToggle";
+import { Logo } from "~/components/logo";;
+import { ThemeToggle } from "~/components/theme-toggle";
 import type { HomeDocument } from "~/types/home";
 import type { ThemePreference } from "~/types/themePreference";
 

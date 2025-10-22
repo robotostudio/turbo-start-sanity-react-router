@@ -5,15 +5,6 @@ import { queryHomePageData } from "~/sanity/queries";
 import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
 import type { Route } from "./+types";
 
-// export const meta = ({ matches }: Route.MetaArgs) => {
-//   const layoutData = matches.find(
-//     (match) => match.id === "routes/website/layout"
-//   )?.data;
-//   const home = layoutData ? layoutData.initial.data : null;
-//   const title = [home?.title, home?.siteTitle].filter(Boolean).join(" | ");
-
-//   return [{ title }];
-// };
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { options } = await loadQueryOptions(request.headers);

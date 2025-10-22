@@ -2,18 +2,18 @@ import { VisualEditing } from "@sanity/visual-editing/react-router";
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
 
-import { Footer } from "~/components/Footer";
+import { Footer } from "~/components/footer";
 import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
 
 import type { Route } from "./+types/layout";
 
 const SanityLiveMode = lazy(() =>
-  import("~/components/SanityLiveMode").then((module) => ({
+  import("~/components/sanity-live-mode").then((module) => ({
     default: module.SanityLiveMode,
   }))
 );
 const ExitPreview = lazy(() =>
-  import("~/components/ExitPreview").then((module) => ({
+  import("~/components/exit-preview").then((module) => ({
     default: module.ExitPreview,
   }))
 );
