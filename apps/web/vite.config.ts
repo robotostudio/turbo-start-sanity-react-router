@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       "~": path.resolve(import.meta.dirname, "./app"),
     },
+    extensions: [".mjs", ".js", ".mts", ".ts", ".jsx", ".tsx", ".json"],
   },
   optimizeDeps: {
     exclude: ["@resvg/resvg-js"],
