@@ -2240,6 +2240,9 @@ export type QueryRedirectsResult = Array<{
   destination: string;
   permanent: false | true;
 }>;
+// Variable: queryDocumentTypeBySlug
+// Query: *[defined(slug.current) && slug.current == $slug][0]._type
+export type QueryDocumentTypeBySlugResult = "blog" | "blogIndex" | "homePage" | "page" | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -2262,5 +2265,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"settings\"][0]{\n    _id,\n    _type,\n    siteTitle,\n    logo {\n      \n  \"id\": asset._ref,\n  \"preview\": asset->metadata.lqip,\n  hotspot {\n    x,\n    y\n  },\n  crop {\n    bottom,\n    left,\n    right,\n    top\n  }\n\n    },\n    siteDescription,\n    socialLinks{\n      linkedin,\n      facebook,\n      twitter,\n      instagram,\n      youtube\n    }\n  }\n": QueryGlobalSeoSettingsResult;
     "\n  *[_type == \"settings\"][0]{\n    _id,\n    _type,\n    siteTitle,\n    siteDescription,\n    \"logo\": logo.asset->url + \"?w=80&h=40&dpr=3&fit=max\",\n    \"socialLinks\": socialLinks,\n    \"contactEmail\": contactEmail,\n  }\n": QuerySettingsDataResult;
     "\n  *[_type == \"redirect\" && status == \"active\" && defined(source.current) && defined(destination.current)]{\n    \"source\":source.current, \n    \"destination\":destination.current, \n    \"permanent\" : permanent == \"true\"\n  }\n": QueryRedirectsResult;
+    "\n  *[defined(slug.current) && slug.current == $slug][0]._type\n": QueryDocumentTypeBySlugResult;
   }
 }

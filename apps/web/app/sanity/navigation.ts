@@ -1,6 +1,14 @@
 import { loadQuery } from "./loader.server";
-import { queryGlobalSeoSettings, queryNavbarData } from "./queries";
-import type { QueryGlobalSeoSettingsResult, QueryNavbarDataResult } from "./sanity.types";
+import {
+  queryFooterData,
+  queryGlobalSeoSettings,
+  queryNavbarData,
+} from "./queries";
+import type {
+  QueryFooterDataResult,
+  QueryGlobalSeoSettingsResult,
+  QueryNavbarDataResult,
+} from "./sanity.types";
 
 
 export const getNavigationData = async () => {
@@ -10,4 +18,11 @@ export const getNavigationData = async () => {
   ]);
 
   return { navbarData: navbarData?.data, settingsData: settingsData?.data };
+};
+
+
+
+export const getFooterData = async () => {
+  const footerData = await loadQuery<QueryFooterDataResult>(queryFooterData);
+  return footerData?.data;
 };

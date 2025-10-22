@@ -15,7 +15,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { dataset, projectId, studioUrl } from "~/sanity/projectDetails";
 import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
-import type { PageBuilderBlockTypes, PagebuilderType } from "~/types";
+import type { PageBuilderBlockTypes } from "~/types";
 import { CTABlock } from "./sections/cta";
 import { FaqAccordion } from "./sections/faq-accordion";
 import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
@@ -48,10 +48,8 @@ const BLOCK_COMPONENTS = {
   featureCardsIcon: FeatureCardsWithIcon,
   subscribeNewsletter: SubscribeNewsletter,
   imageLinkCards: ImageLinkCards,
-} as const satisfies Record<
-  PageBuilderBlockTypes,
-  React.ComponentType<PagebuilderType<PageBuilderBlockTypes>>
->;
+  // biome-ignore lint/suspicious/noExplicitAny: we need to use any for the component type
+} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;
 
 /**
  * Helper function to create consistent Sanity data attributes
@@ -146,7 +144,8 @@ function useBlockRenderer(id: string, type: string) {
           data-sanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
         >
-          <Component {...block} />
+          {/* biome-ignore lint/suspicious/noExplicitAny: we need to use any for the component type */}
+          <Component {...(block as any)} />
         </div>
       );
     },

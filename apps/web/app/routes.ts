@@ -11,9 +11,10 @@ export default [
   layout("./routes/website/layout.tsx", [
     index("./routes/website/index.tsx"),
     // ...prefix("records", [
-    //   route(":slug", "./routes/website/records/$slug.tsx"),
+    route("*", "./routes/website/catch-all.tsx"),
     // ]),
   ]),
+  ...prefix("api", [route("navigation", "./routes/api/navigation.ts")]),
   // From Studio layout, because of Visual Editing
   // route("studio/*", "routes/studio.tsx"),
   // // Resource routes

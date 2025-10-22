@@ -1,11 +1,10 @@
 import { VisualEditing } from "@sanity/visual-editing/react-router";
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
-
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";
 import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
-import { getNavigationData } from "~/sanity/navigation";
+import { getFooterData, getNavigationData } from "~/sanity/navigation";
 import type { Route } from "./+types/layout";
 
 const SanityLiveMode = lazy(() =>
@@ -23,16 +22,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const { preview } = await loadQueryOptions(request.headers);
 
   const navigationData = await getNavigationData();
-  // Content from Sanity used in the global layout
+  const footerData = await getFooterData();
 
   return {
     navigationData,
+    footerData,
     sanity: { preview },
   };
 };
 
 export default function Website({ loaderData }: Route.ComponentProps) {
-  const { sanity, navigationData } = loaderData;
+  const { sanity, navigationData, footerData } = loaderData;
   return (
     <>
       <div className="container mx-auto grid grid-cols-1 gap-4 p-4 lg:gap-12 lg:p-12">
@@ -42,7 +42,9 @@ export default function Website({ loaderData }: Route.ComponentProps) {
         />
         <Outlet />
       </div>
-      <Footer />
+      {footerData && navigationData.settingsData && (
+        <Footer data={footerData} settingsData={navigationData.settingsData} />
+      )}
       {sanity.preview ? (
         <Suspense>
           <SanityLiveMode />

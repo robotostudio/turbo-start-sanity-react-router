@@ -403,3 +403,9 @@ export const queryRedirects = defineQuery(`
     "permanent" : permanent == "true"
   }
 `);
+
+
+
+export const queryDocumentTypeBySlug = defineQuery(`
+  *[defined(slug.current) && slug.current == $slug][0]._type
+`);

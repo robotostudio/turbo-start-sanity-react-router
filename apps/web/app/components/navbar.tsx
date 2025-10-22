@@ -13,9 +13,8 @@ import type {
 } from "~/sanity/sanity.types";
 import { SanityButtons } from "./elements/sanity-buttons";
 import { SanityIcon } from "./elements/sanity-icon";
+import { Logo } from "./logo";
 
-// import { Logo } from "./logo";
-// import { ModeToggle } from "./mode-toggle";
 
 // Type helpers using utility types
 type NavigationData = {
@@ -144,7 +143,7 @@ function DesktopColumnLink({
   );
 }
 
-function MobileMenu({ navbarData }: NavigationData) {
+function MobileMenu({ navbarData, settingsData }: NavigationData) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -158,7 +157,7 @@ function MobileMenu({ navbarData }: NavigationData) {
   }
 
   const { columns, buttons } = navbarData || {};
-  // const { logo, siteTitle } = settingsData || {};
+  const { logo, siteTitle } = settingsData || {};
 
   return (
     <>
@@ -179,7 +178,7 @@ function MobileMenu({ navbarData }: NavigationData) {
           <div className="fixed top-16 left-0 h-[calc(100vh-4rem)] w-full border-r bg-background p-6 shadow-lg">
             <div className="grid gap-6">
               {/* Logo for mobile */}
-              {/* {logo && (
+              {logo && (
                 <div className="flex justify-center border-b pb-4">
                   <Logo
                     alt={siteTitle || ""}
@@ -188,7 +187,7 @@ function MobileMenu({ navbarData }: NavigationData) {
                     width={120}
                   />
                 </div>
-              )} */}
+              )}
 
               {/* Navigation items */}
               <div className="grid gap-4">
@@ -270,9 +269,9 @@ function NavbarSkeleton() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo skeleton - matches Logo component dimensions: width={120} height={40} */}
-          {/* <div className="flex items-center">
-            <div className="h-10 w-[120px] rounded bg-muted/50 animate-pulse" />
-          </div> */}
+          <div className="flex items-center">
+            <div className="h-10 w-[120px] animate-pulse rounded bg-muted/50" />
+          </div>
           <div className="flex h-[40px] w-[120px] items-center">
             <div className="h-10 w-[120px] animate-pulse rounded bg-muted/50" />
           </div>
@@ -328,7 +327,7 @@ export function Navbar({
   };
   const { navbarData, settingsData } = navigationData;
   const { columns, buttons } = navbarData || {};
-
+  const { logo, siteTitle } = settingsData || {};
   // Show skeleton only on initial mount when no fallback data is available
   if (isLoading && !data && !(initialNavbarData && initialSettingsData)) {
     return <NavbarSkeleton />;
@@ -340,15 +339,14 @@ export function Navbar({
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex h-[40px] w-[120px] items-center">
-            {/* {logo && (
+            {logo && (
               <Logo
                 alt={siteTitle || ""}
                 height={40}
                 image={logo}
-                priority
                 width={120}
               />
-            )} */}
+            )}
           </div>
 
           {/* Desktop Navigation */}
