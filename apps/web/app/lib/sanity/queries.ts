@@ -2,7 +2,7 @@ import { defineQuery } from "groq";
 
 const imageFields = /* groq */ `
   "id": asset._ref,
-  "preview": asset->metadata.lqip,
+  // "preview": asset->metadata.lqip,
   hotspot {
     x,
     y
