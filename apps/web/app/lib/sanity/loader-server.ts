@@ -5,7 +5,7 @@ import { client } from "./client";
 
 const clientWithToken = client.withConfig({
   // Token required for when perspective: 'previewDrafts'
-  token: process.env.SANITY_READ_TOKEN,
+  token: process.env.SANITY_API_READ_TOKEN,
   // Minimum required stega config
   stega: { studioUrl },
 });
