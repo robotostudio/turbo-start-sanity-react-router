@@ -226,6 +226,9 @@ importers:
       '@react-router/serve':
         specifier: ^7.9.2
         version: 7.9.4(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+      '@workspace/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       isbot:
         specifier: ^5.1.31
         version: 5.1.31
