@@ -9,14 +9,27 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@portabletext/react": "^4.0.3",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
+    "@sanity/asset-utils": "^2.3.0",
+    "@sanity/client": "^7.12.0",
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/preview-url-secret": "^2.1.15",
+    "@sanity/react-loader": "^1.11.22",
+    "@sanity/visual-editing": "^3.2.4",
     "@vercel/react-router": "^1.2.3",
     "@workspace/ui": "workspace:*",
+    "@workspace/utils": "workspace:*",
+    "groq": "^4.10.3",
     "isbot": "^5.1.31",
+    "lucide-react": "^0.546.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router": "^7.9.2"
+    "react-router": "^7.9.2",
+    "sanity-image": "^1.0.0",
+    "swr": "^2.3.6",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@react-router/dev": "^7.9.2",
