@@ -1,7 +1,7 @@
 import type {
   QueryBlogIndexPageDataResult,
   QueryBlogSlugPageDataResult,
-} from "~/sanity/sanity.types";
+} from "~/lib/sanity/sanity.types";
 import { BlogCard, BlogHeader, FeaturedBlogCard } from "../blog-card";
 import { RichText } from "../elements/rich-text";
 import { SanityImage } from "../elements/sanity-image";

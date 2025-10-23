@@ -1,3 +1,8 @@
+import { PageBuilder } from "~/components/pagebuilder";
+import {
+  BlogComponent,
+  BlogIndexComponent,
+} from "~/components/pages/blog-component";
 import { loadQueryOptions } from "~/lib/sanity/load-query-options";
 import { loadQuery } from "~/lib/sanity/loader-server";
 import {
@@ -132,17 +137,16 @@ export default function CatchAll({ loaderData }: Route.ComponentProps) {
   switch (loaderData.type) {
     case "page":
       return (
-        // <PageBuilder
-        //   id={loaderData.page._id}
-        //   pageBuilder={loaderData.page.pageBuilder ?? []}
-        //   type={loaderData.page._type}
-        // />
-        <div>Hello World</div>
+        <PageBuilder
+          id={loaderData.page._id}
+          pageBuilder={loaderData.page.pageBuilder ?? []}
+          type={loaderData.page._type}
+        />
       );
     case "blog":
-      return <div>Hello World</div>;
+      return <BlogComponent blog={loaderData.blog} />;
     case "blogIndex":
-      return <div>Hello World</div>;
+      return <BlogIndexComponent blogIndex={loaderData.blogIndex} />;
     default:
       throw new Response("Not found", { status: 404 });
   }

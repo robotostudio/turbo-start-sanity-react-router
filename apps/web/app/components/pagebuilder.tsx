@@ -5,10 +5,9 @@ import {
   useOptimistic,
 } from "@sanity/visual-editing/react";
 
-
 import { useCallback, useMemo } from "react";
-import { dataset, projectId, studioUrl } from "~/sanity/projectDetails";
-import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
+import { dataset, projectId, studioUrl } from "~/env";
+import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
 import type { PageBuilderBlockTypes } from "~/types";
 import { CTABlock } from "./sections/cta";
 import { FaqAccordion } from "./sections/faq-accordion";

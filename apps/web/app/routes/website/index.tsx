@@ -1,12 +1,8 @@
 import { loadQuery, useQuery } from "@sanity/react-loader";
+import { PageBuilder } from "~/components/pagebuilder";
 import { loadQueryOptions } from "~/lib/sanity/load-query-options";
 import { queryHomePageData } from "~/lib/sanity/queries";
 import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
-// import { PageBuilder } from "~/components/pagebuilder";
-// import { loadQuery } from "~/sanity/loader.server";
-// import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
-// import { queryHomePageData } from "~/sanity/queries";
-// import type { QueryHomePageDataResult } from "~/sanity/sanity.types";
 import type { Route } from "./+types";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
@@ -33,5 +29,5 @@ export default function Index({ loaderData }: Route.ComponentProps) {
     return null;
   }
 
-  return <div>Hello World</div>;
+  return <PageBuilder id={_id} pageBuilder={pageBuilder} type={_type} />;
 }
