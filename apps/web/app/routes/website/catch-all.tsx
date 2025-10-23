@@ -1,22 +1,17 @@
-import { PageBuilder } from "~/components/pagebuilder";
-import {
-  BlogComponent,
-  BlogIndexComponent,
-} from "~/components/pages/blog-component";
-import { loadQuery } from "~/sanity/loader.server";
-import { loadQueryOptions } from "~/sanity/loadQueryOptions.server";
+import { loadQueryOptions } from "~/lib/sanity/load-query-options";
+import { loadQuery } from "~/lib/sanity/loader-server";
 import {
   queryBlogIndexPageData,
   queryBlogSlugPageData,
   queryDocumentTypeBySlug,
   querySlugPageData,
-} from "~/sanity/queries";
+} from "~/lib/sanity/queries";
 import type {
   QueryBlogIndexPageDataResult,
   QueryBlogSlugPageDataResult,
   QueryDocumentTypeBySlugResult,
   QuerySlugPageDataResult,
-} from "~/sanity/sanity.types";
+} from "~/lib/sanity/sanity.types";
 import type { Route } from "./+types/catch-all";
 
 type DocumentType = NonNullable<QueryDocumentTypeBySlugResult>;
@@ -133,22 +128,21 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   return await loadContentByType(type.data, slug, options);
 }
 
-
-
 export default function CatchAll({ loaderData }: Route.ComponentProps) {
   switch (loaderData.type) {
     case "page":
       return (
-        <PageBuilder
-          id={loaderData.page._id}
-          pageBuilder={loaderData.page.pageBuilder ?? []}
-          type={loaderData.page._type}
-        />
+        // <PageBuilder
+        //   id={loaderData.page._id}
+        //   pageBuilder={loaderData.page.pageBuilder ?? []}
+        //   type={loaderData.page._type}
+        // />
+        <div>Hello World</div>
       );
     case "blog":
-      return <BlogComponent blog={loaderData.blog} />;
+      return <div>Hello World</div>;
     case "blogIndex":
-      return <BlogIndexComponent blogIndex={loaderData.blogIndex} />;
+      return <div>Hello World</div>;
     default:
       throw new Response("Not found", { status: 404 });
   }

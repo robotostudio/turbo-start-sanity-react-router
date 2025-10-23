@@ -1,4 +1,4 @@
-import { getNavigationData } from "~/sanity/navigation";
+import { getNavigationData } from "~/lib/sanity/data/navigation";
 
 export const loader = async () => {
   const navigationData = await getNavigationData();
