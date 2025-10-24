@@ -58,7 +58,9 @@ export function MetaTags({ data: _data }: { data: SeoDataResult }) {
   const ogTitle = data.title ?? siteTitle;
   const ogDescription = data.description ?? "";
   const canonicalUrl = getCanonicalUrl(data.slug ?? "/");
-  const ogImageUrl = data.seoImage ? buildImageUrl(data.seoImage) : undefined;
+  const ogImageUrl = data.seoImage
+    ? buildImageUrl(data.seoImage)
+    : `${siteUrl}/api/og?type=${data.contentType}&id=${data.contentId}`;
 
   return (
     <>
@@ -98,7 +100,9 @@ function prepareBlogMetadata(data: NonNullable<QueryBlogSlugPageDataResult>) {
       : "";
   const publishedTime = data.publishedAt ?? data._createdAt;
   const modifiedTime = data._updatedAt;
-  const ogImageUrl = data.seoImage ? buildImageUrl(data.seoImage) : undefined;
+  const ogImageUrl = data.seoImage
+    ? buildImageUrl(data.seoImage)
+    : `${siteUrl}/api/og?type=blog&id=${data._id}`;
 
   const jsonLd = {
     "@context": "https://schema.org",

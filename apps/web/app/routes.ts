@@ -14,6 +14,7 @@ export default [
   ...prefix("api", [
     route("navigation", "./routes/api/navigation.ts"),
     route("preview", "./routes/resource/preview.ts"),
+    route("og", "./routes/api/og.ts"),
   ]),
   // // Resource routes
   // ...prefix("resource", [
