@@ -407,3 +407,11 @@ export const queryRedirects = defineQuery(`
 export const queryDocumentTypeBySlug = defineQuery(`
   *[defined(slug.current) && slug.current == $slug][0]._type
 `);
+
+
+export const queryAllPagesDataForPrerender = defineQuery(`
+  *[_type in ["page", "blog","blogIndex","homePage"] && defined(slug.current)]{
+    "slug": slug.current,
+    "lastModified": _updatedAt
+  }
+`);
