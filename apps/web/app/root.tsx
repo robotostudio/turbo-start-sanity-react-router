@@ -11,6 +11,15 @@ import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
 
 export const links: Route.LinksFunction = () => [
+  // DNS prefetch for faster resource loading
+  { rel: "dns-prefetch", href: "https://cdn.sanity.io" },
+  {
+    rel: "preconnect",
+    href: "https://cdn.sanity.io",
+    crossOrigin: "anonymous",
+  },
+
+  // Font optimization
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -19,7 +28,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
   },
 ];
 

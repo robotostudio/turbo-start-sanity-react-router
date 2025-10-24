@@ -85,9 +85,9 @@ function extractCrop(image: SanityImageData): ImageCrop | undefined {
   };
 }
 
-function hasPreview(preview: unknown): preview is string {
-  return typeof preview === "string" && preview.length > 0;
-}
+// function hasPreview(preview: unknown): preview is string {
+//   return typeof preview === "string" && preview.length > 0;
+// }
 
 // Main image processing function
 function processImageData(image: SanityImageData): ProcessedImageData | null {
@@ -98,11 +98,11 @@ function processImageData(image: SanityImageData): ProcessedImageData | null {
 
   const hotspot = extractHotspot(image);
   const crop = extractCrop(image);
-  const preview = hasPreview(image.preview) ? image.preview : undefined;
+  // const preview = hasPreview(image?.preview) ? image?.preview : undefined;
 
   return {
     id: image.id,
-    ...(preview && { preview }),
+    // ...(preview && { preview }),
     ...(hotspot && { hotspot }),
     ...(crop && { crop }),
   };
@@ -121,8 +121,14 @@ function SanityImageComponent({ image, ...props }: SanityImageProps) {
   if (!processedImageData) {
     return null;
   }
+  // Add to SanityImage component
+const optimizedProps = {
+  loading: "lazy" as const,
+  decoding: "async" as const,
+  ...props,
+};
 
-  return <ImageWrapper {...props} {...processedImageData} />;
+  return <ImageWrapper {...optimizedProps} {...processedImageData} />;
 }
 
 // Memoized export for performance optimization

@@ -7,7 +7,6 @@ const dataset = process.env.SANITY_STUDIO_DATASET;
  * Returns the correct studio host based on environment variables.
  * - If HOST_NAME is set and not "main", returns `${HOST_NAME}-${PRODUCTION_HOSTNAME}`
  * - If HOST_NAME is "main" or not set, returns PRODUCTION_HOSTNAME
- * - If PRODUCTION_HOSTNAME is not set, returns a default using projectId
  */
 const productionHostName = "react-router";
 

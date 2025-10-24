@@ -11,10 +11,12 @@ export default [
     index("./routes/website/index.tsx"),
     route("*", "./routes/website/catch-all.tsx"),
   ]),
-  ...prefix("api", [route("navigation", "./routes/api/navigation.ts")]),
-  // // Resource routes
-  ...prefix("resource", [
-    // route("og", "./routes/resource/og.ts"),
+  ...prefix("api", [
+    route("navigation", "./routes/api/navigation.ts"),
     route("preview", "./routes/resource/preview.ts"),
   ]),
+  // // Resource routes
+  // ...prefix("resource", [
+  //   // route("og", "./routes/resource/og.ts"),
+  // ]),
 ] satisfies RouteConfig;
