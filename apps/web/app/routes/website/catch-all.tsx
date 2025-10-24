@@ -18,6 +18,7 @@ import type {
   QueryDocumentTypeBySlugResult,
   QuerySlugPageDataResult,
 } from "~/lib/sanity/sanity.types";
+import { BlogMetaTags, MetaTags } from "~/lib/seo/meta-tags";
 import type { Route } from "./+types/catch-all";
 
 type DocumentType = NonNullable<QueryDocumentTypeBySlugResult>;
@@ -161,7 +162,12 @@ function PageContent({ loaderData }: { loaderData: PageLoaderData }) {
 
   const { pageBuilder, _id, _type } = data;
 
-  return <PageBuilder id={_id} pageBuilder={pageBuilder ?? []} type={_type} />;
+  return (
+    <>
+      <MetaTags data={data} />
+      <PageBuilder id={_id} pageBuilder={pageBuilder ?? []} type={_type} />
+    </>
+  );
 }
 
 function BlogContent({ loaderData }: { loaderData: BlogLoaderData }) {
@@ -174,7 +180,12 @@ function BlogContent({ loaderData }: { loaderData: BlogLoaderData }) {
     return null;
   }
 
-  return <BlogComponent blog={data} />;
+  return (
+    <>
+      <BlogMetaTags data={data} />
+      <BlogComponent blog={data} />
+    </>
+  );
 }
 
 function BlogIndexContent({ loaderData }: { loaderData: BlogIndexLoaderData }) {
@@ -187,7 +198,12 @@ function BlogIndexContent({ loaderData }: { loaderData: BlogIndexLoaderData }) {
     return null;
   }
 
-  return <BlogIndexComponent blogIndex={data} />;
+  return (
+    <>
+      <MetaTags data={data} />
+      <BlogIndexComponent blogIndex={data} />
+    </>
+  );
 }
 
 export default function CatchAll({ loaderData }: Route.ComponentProps) {

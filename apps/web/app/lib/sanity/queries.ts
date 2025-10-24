@@ -21,6 +21,18 @@ const imageFragment = /* groq */ `
   }
 `;
 
+const seoFieldsFragment = /* groq */ `
+  seoTitle,
+  seoDescription,
+  seoNoIndex,
+  seoHideFromLists,
+  ogTitle,
+  ogDescription,
+  seoImage { 
+    ${imageFields}
+  }
+`;
+
 const customLinkFragment = /* groq */ `
   ...customLink{
     openInNewTab,
@@ -203,6 +215,7 @@ export const queryHomePageData =
     ...,
     _id,
     _type,
+    ${seoFieldsFragment},
     "slug": slug.current,
     title,
     description,
@@ -213,7 +226,8 @@ export const querySlugPageData = defineQuery(`
   *[_type == "page" && slug.current == $slug][0]{
     ...,
     "slug": slug.current,
-    ${pageBuilderFragment}
+    ${pageBuilderFragment},
+    ${seoFieldsFragment},
   }
   `);
 
@@ -231,6 +245,7 @@ export const queryBlogIndexPageData = defineQuery(`
     "displayFeaturedBlogs" : displayFeaturedBlogs == "yes",
     "featuredBlogsCount" : featuredBlogsCount,
     ${pageBuilderFragment},
+    ${seoFieldsFragment},
     "slug": slug.current,
     "blogs": *[_type == "blog" && (seoHideFromLists != true)] | order(orderRank asc){
       ${blogCardFragment}
@@ -242,6 +257,7 @@ export const queryBlogSlugPageData = defineQuery(`
   *[_type == "blog" && slug.current == $slug][0]{
     ...,
     "slug": slug.current,
+    ${seoFieldsFragment},
     ${blogAuthorFragment},
     ${imageFragment},
     ${richTextFragment},

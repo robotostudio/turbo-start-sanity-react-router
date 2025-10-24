@@ -4,6 +4,7 @@ import { loadQueryOptions } from "~/lib/sanity/load-query-options";
 import { loadQuery } from "~/lib/sanity/loader-server";
 import { queryHomePageData } from "~/lib/sanity/queries";
 import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
+import { MetaTags } from "~/lib/seo/meta-tags";
 import type { Route } from "./+types";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
@@ -25,10 +26,19 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default function Index({ loaderData }: Route.ComponentProps) {
   const { initial, params, query } = loaderData;
   const { data } = useQuery(query, params, { initial });
+
+  if (!data) {
+    return null;
+  }
   const { pageBuilder, _id, _type } = data ?? {};
   if (!(pageBuilder && _id && _type)) {
     return null;
   }
 
-  return <PageBuilder id={_id} pageBuilder={pageBuilder} type={_type} />;
+  return (
+    <>
+      <MetaTags data={data} />
+      <PageBuilder id={_id} pageBuilder={pageBuilder} type={_type} />
+    </>
+  );
 }

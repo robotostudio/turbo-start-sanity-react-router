@@ -11,7 +11,14 @@ import {
 
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
-import { apiVersion, dataset, projectId, studioUrl } from "./env";
+import {
+  apiVersion,
+  dataset,
+  projectId,
+  siteTitle,
+  siteUrl,
+  studioUrl,
+} from "./env";
 
 export const links: Route.LinksFunction = () => [
   // DNS prefetch for faster resource loading
@@ -42,6 +49,8 @@ export const loader = async () =>
       VITE_SANITY_DATASET: dataset,
       VITE_SANITY_API_VERSION: apiVersion,
       VITE_SANITY_STUDIO_URL: studioUrl,
+      VITE_SITE_URL: siteUrl,
+      VITE_SITE_TITLE: siteTitle,
     },
   });
 
