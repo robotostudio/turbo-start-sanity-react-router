@@ -9,6 +9,8 @@
       "env": [
         "SANITY_API_READ_TOKEN",
         "SANITY_API_WRITE_TOKEN",
+        "SANITY_READ_TOKEN",
+        "SANITY_WRITE_TOKEN",
         "SANITY_SESSION_SECRET"
       ]
     },

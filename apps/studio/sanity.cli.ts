@@ -9,23 +9,17 @@ const dataset = process.env.SANITY_STUDIO_DATASET;
  * - If HOST_NAME is "main" or not set, returns PRODUCTION_HOSTNAME
  * - If PRODUCTION_HOSTNAME is not set, returns a default using projectId
  */
+const productionHostName = "react-router";
+
+
 function getStudioHost(): string | undefined {
   const host = process.env.HOST_NAME;
-  const productionHostName = process.env.SANITY_STUDIO_PRODUCTION_HOSTNAME;
 
-  if (productionHostName) {
-    if (host && host !== "main") {
-      return `${host}-${productionHostName}`;
-    }
-
-    return productionHostName;
+  if (host && host !== "main") {
+    return `${host}-${productionHostName}`;
   }
 
-  if (projectId) {
-    return `${projectId}`;
-  }
-
-  return;
+  return productionHostName;
 }
 
 export default defineCliConfig({
@@ -34,5 +28,7 @@ export default defineCliConfig({
     dataset,
   },
   studioHost: getStudioHost(),
-  autoUpdates: false,
+  deployment: {
+    autoUpdates: false,
+  },
 });
