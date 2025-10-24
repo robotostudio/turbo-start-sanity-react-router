@@ -169,7 +169,7 @@ export function createPageTemplate() {
  */
 export const getPresentationUrl = () => {
   if (process.env.NODE_ENV === "development") {
-    return "http://localhost:3000";
+    return "http://localhost:5173";
   }
 
   const presentationUrl = process.env.SANITY_STUDIO_PRESENTATION_URL;

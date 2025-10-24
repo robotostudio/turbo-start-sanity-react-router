@@ -1,6 +1,7 @@
-import { loadQuery, useQuery } from "@sanity/react-loader";
+import { useQuery } from "@sanity/react-loader";
 import { PageBuilder } from "~/components/pagebuilder";
 import { loadQueryOptions } from "~/lib/sanity/load-query-options";
+import { loadQuery } from "~/lib/sanity/loader-server";
 import { queryHomePageData } from "~/lib/sanity/queries";
 import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
 import type { Route } from "./+types";

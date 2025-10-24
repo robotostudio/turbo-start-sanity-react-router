@@ -1,14 +1,17 @@
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
+import { apiVersion, dataset, projectId, studioUrl } from "./env";
 
 export const links: Route.LinksFunction = () => [
   // DNS prefetch for faster resource loading
@@ -32,7 +35,18 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const loader = async () =>
+  data({
+    ENV: {
+      VITE_SANITY_PROJECT_ID: projectId,
+      VITE_SANITY_DATASET: dataset,
+      VITE_SANITY_API_VERSION: apiVersion,
+      VITE_SANITY_STUDIO_URL: studioUrl,
+    },
+  });
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { ENV } = useLoaderData<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -45,13 +59,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script
+          //biome-ignore lint/security/noDangerouslySetInnerHtml: public env
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+          }}
+          key="env"
+        />
       </body>
     </html>
   );
 }
 
-export default function App() {
-  return <Outlet />;
+export default function App({ loaderData }: Route.ComponentProps) {
+  return <Outlet context={loaderData} />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

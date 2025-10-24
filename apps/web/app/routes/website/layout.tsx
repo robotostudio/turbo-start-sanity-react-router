@@ -19,11 +19,11 @@ const ExitPreview = lazy(() =>
 );
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const { preview } = await loadQueryOptions(request.headers);
-
-  const navigationData = await getNavigationData();
-  const footerData = await getFooterData();
-
+  const [{ preview }, navigationData, footerData] = await Promise.all([
+    loadQueryOptions(request.headers),
+    getNavigationData(),
+    getFooterData(),
+  ]);
   return {
     navigationData,
     footerData,

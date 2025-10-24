@@ -1,3 +1,4 @@
+import { type QueryResponseInitial, useQuery } from "@sanity/react-loader";
 import { PageBuilder } from "~/components/pagebuilder";
 import {
   BlogComponent,
@@ -23,17 +24,23 @@ type DocumentType = NonNullable<QueryDocumentTypeBySlugResult>;
 
 type PageLoaderData = {
   type: "page";
-  page: NonNullable<QuerySlugPageDataResult>;
+  initial: QueryResponseInitial<QuerySlugPageDataResult>;
+  query: string;
+  params: { slug: string };
 };
 
 type BlogLoaderData = {
   type: "blog";
-  blog: NonNullable<QueryBlogSlugPageDataResult>;
+  initial: QueryResponseInitial<QueryBlogSlugPageDataResult>;
+  query: string;
+  params: { slug: string };
 };
 
 type BlogIndexLoaderData = {
   type: "blogIndex";
-  blogIndex: NonNullable<QueryBlogIndexPageDataResult>;
+  initial: QueryResponseInitial<QueryBlogIndexPageDataResult>;
+  query: string;
+  params: { slug: string };
 };
 
 type LoaderData = PageLoaderData | BlogLoaderData | BlogIndexLoaderData;
@@ -42,19 +49,22 @@ async function loadPageData(
   slug: string,
   options: Awaited<ReturnType<typeof loadQueryOptions>>["options"]
 ): Promise<PageLoaderData> {
-  const page = await loadQuery<QuerySlugPageDataResult>(
+  const params = { slug };
+  const initial = await loadQuery<QuerySlugPageDataResult>(
     querySlugPageData,
-    { slug },
+    params,
     options
   );
 
-  if (!page?.data) {
+  if (!initial?.data) {
     throw new Response("Not found", { status: 404 });
   }
 
   return {
     type: "page",
-    page: page.data,
+    initial,
+    query: querySlugPageData,
+    params,
   };
 }
 
@@ -62,19 +72,22 @@ async function loadBlogData(
   slug: string,
   options: Awaited<ReturnType<typeof loadQueryOptions>>["options"]
 ): Promise<BlogLoaderData> {
-  const blog = await loadQuery<QueryBlogSlugPageDataResult>(
+  const params = { slug };
+  const initial = await loadQuery<QueryBlogSlugPageDataResult>(
     queryBlogSlugPageData,
-    { slug },
+    params,
     options
   );
 
-  if (!blog?.data) {
+  if (!initial?.data) {
     throw new Response("Not found", { status: 404 });
   }
 
   return {
     type: "blog",
-    blog: blog.data,
+    initial,
+    query: queryBlogSlugPageData,
+    params,
   };
 }
 
@@ -82,19 +95,22 @@ async function loadBlogIndexData(
   slug: string,
   options: Awaited<ReturnType<typeof loadQueryOptions>>["options"]
 ): Promise<BlogIndexLoaderData> {
-  const blogIndex = await loadQuery<QueryBlogIndexPageDataResult>(
+  const params = { slug };
+  const initial = await loadQuery<QueryBlogIndexPageDataResult>(
     queryBlogIndexPageData,
-    { slug },
+    params,
     options
   );
 
-  if (!blogIndex?.data) {
+  if (!initial?.data) {
     throw new Response("Not found", { status: 404 });
   }
 
   return {
     type: "blogIndex",
-    blogIndex: blogIndex.data,
+    initial,
+    query: queryBlogIndexPageData,
+    params,
   };
 }
 
@@ -133,20 +149,55 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   return await loadContentByType(type.data, slug, options);
 }
 
+function PageContent({ loaderData }: { loaderData: PageLoaderData }) {
+  const { initial, params, query } = loaderData;
+  const { data } = useQuery<QuerySlugPageDataResult>(query, params, {
+    initial,
+  });
+
+  if (!data) {
+    return null;
+  }
+
+  const { pageBuilder, _id, _type } = data;
+
+  return <PageBuilder id={_id} pageBuilder={pageBuilder ?? []} type={_type} />;
+}
+
+function BlogContent({ loaderData }: { loaderData: BlogLoaderData }) {
+  const { initial, params, query } = loaderData;
+  const { data } = useQuery<QueryBlogSlugPageDataResult>(query, params, {
+    initial,
+  });
+
+  if (!data) {
+    return null;
+  }
+
+  return <BlogComponent blog={data} />;
+}
+
+function BlogIndexContent({ loaderData }: { loaderData: BlogIndexLoaderData }) {
+  const { initial, params, query } = loaderData;
+  const { data } = useQuery<QueryBlogIndexPageDataResult>(query, params, {
+    initial,
+  });
+
+  if (!data) {
+    return null;
+  }
+
+  return <BlogIndexComponent blogIndex={data} />;
+}
+
 export default function CatchAll({ loaderData }: Route.ComponentProps) {
   switch (loaderData.type) {
     case "page":
-      return (
-        <PageBuilder
-          id={loaderData.page._id}
-          pageBuilder={loaderData.page.pageBuilder ?? []}
-          type={loaderData.page._type}
-        />
-      );
+      return <PageContent loaderData={loaderData} />;
     case "blog":
-      return <BlogComponent blog={loaderData.blog} />;
+      return <BlogContent loaderData={loaderData} />;
     case "blogIndex":
-      return <BlogIndexComponent blogIndex={loaderData.blogIndex} />;
+      return <BlogIndexContent loaderData={loaderData} />;
     default:
       throw new Response("Not found", { status: 404 });
   }
