@@ -11,7 +11,7 @@ const { getSession, commitSession, destroySession } =
     cookie: {
       name: PREVIEW_SESSION_NAME,
       secrets: [process.env.SANITY_SESSION_SECRET],
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   });
 
