@@ -1,5 +1,6 @@
 {
   "name": "turbo-start-sanity-react-router",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -18,6 +19,6 @@
   },
   "packageManager": "pnpm@10.18.3",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
