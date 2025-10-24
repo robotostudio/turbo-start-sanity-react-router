@@ -35,10 +35,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     token: process.env.SANITY_API_READ_TOKEN,
   });
 
-  const { isValid, redirectTo = "/" } = await validatePreviewUrl(
-    clientWithToken,
-    request.url
-  );
+  const {
+    isValid,
+    redirectTo = "/",
+    ...rest
+  } = await validatePreviewUrl(clientWithToken, request.url);
+  console.log("🚀 ~ loader ~ rest:", rest, { url: request.url });
 
   if (!isValid) {
     throw new Response("Invalid secret", { status: 401 });
