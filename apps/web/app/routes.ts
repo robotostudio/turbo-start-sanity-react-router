@@ -17,8 +17,4 @@ export default [
     route("navigation", "./routes/api/navigation.ts"),
     route("og", "./routes/api/og.ts"),
   ]),
-  // // Resource routes
-  // ...prefix("resource", [
-  //   // route("og", "./routes/resource/og.ts"),
-  // ]),
 ] satisfies RouteConfig;
