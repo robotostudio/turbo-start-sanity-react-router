@@ -1,31 +1,11 @@
 import { validatePreviewUrl } from "@sanity/preview-url-secret";
-import { type ActionFunction, data, redirect } from "react-router";
+import { redirect } from "react-router";
 
 import { client } from "~/lib/sanity/client";
-import {
-  commitSession,
-  destroySession,
-  getSession,
-} from "~/lib/sanity/session";
+import { commitSession, getSession } from "~/lib/sanity/session";
 
-import type { Route } from "./+types/preview";
+import type { Route } from "./+types/enable";
 
-// A `POST` request to this route will exit preview mode
-export const action: ActionFunction = async ({ request }) => {
-  if (request.method !== "POST") {
-    return data({ message: "Method not allowed" }, 405);
-  }
-
-  const session = await getSession(request.headers.get("Cookie"));
-
-  return redirect("/", {
-    headers: {
-      "Set-Cookie": await destroySession(session),
-    },
-  });
-};
-
-// A `GET` request to this route will enter preview mode
 export const loader = async ({ request }: Route.LoaderArgs) => {
   if (!process.env.SANITY_API_READ_TOKEN) {
     throw new Response("Preview mode missing token", { status: 401 });

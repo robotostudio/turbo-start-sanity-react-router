@@ -12,8 +12,9 @@ export default [
     route("*", "./routes/website/catch-all.tsx"),
   ]),
   ...prefix("api", [
+    route("preview/enable", "./routes/api/preview/enable.ts"),
+    route("preview/disable", "./routes/api/preview/disable.ts"),
     route("navigation", "./routes/api/navigation.ts"),
-    route("preview", "./routes/resource/preview.ts"),
     route("og", "./routes/api/og.ts"),
   ]),
   // // Resource routes
