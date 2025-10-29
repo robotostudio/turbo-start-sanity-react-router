@@ -42,7 +42,7 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.6",
+    "@biomejs/biome": "2.3.2",
     "@sanity/blueprints": "0.3.0",
     "@types/react": "^19.2",
     "ultracite": "5.6.4"
