@@ -7,7 +7,6 @@ import {
 
 import { useCallback, useMemo } from "react";
 import { env } from "~/env/client";
-// import { dataset, projectId, studioUrl } from "~/env";
 import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
 import type { PageBuilderBlockTypes } from "~/types";
 import { CTABlock } from "./sections/cta";

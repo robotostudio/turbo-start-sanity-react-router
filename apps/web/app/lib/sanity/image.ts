@@ -1,6 +1,5 @@
 import { buildSrc, type WrapperProps } from "sanity-image";
 import { env } from "~/env/client";
-// import { dataset, projectId } from "~/env";
 import type { SanityImageProps as SanityImageData } from "~/types";
 
 type ImageHotspot = {

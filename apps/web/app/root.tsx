@@ -10,14 +10,6 @@ import {
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
 import { env } from "./env/client";
-// import {
-//   apiVersion,
-//   dataset,
-//   projectId,
-//   siteTitle,
-//   siteUrl,
-//   studioUrl,
-// } from "./env";
 
 export const links: Route.LinksFunction = () => [
   // DNS prefetch for faster resource loading
@@ -41,20 +33,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-// export const loader = async () =>
-//   data({
-//     ENV: {
-//       VITE_SANITY_PROJECT_ID: env.VITE_SANITY_PROJECT_ID,
-//       VITE_SANITY_DATASET: env.VITE_SANITY_DATASET,
-//       VITE_SANITY_API_VERSION: env.VITE_SANITY_API_VERSION,
-//       VITE_SANITY_STUDIO_URL: env.VITE_SANITY_STUDIO_URL,
-//       VITE_SITE_URL: env.VITE_SITE_URL,
-//       VITE_SITE_TITLE: env.VITE_SITE_TITLE,
-//     },
-//   });
-
 export function Layout({ children }: { children: React.ReactNode }) {
-  // const { ENV } = useLoaderData<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -67,13 +46,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        {/*<script
-          //biome-ignore lint/security/noDangerouslySetInnerHtml: public env
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(ENV)}`,
-          }}
-          key="env"
-        />*/}
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 import { stegaClean } from "@sanity/client/stega";
 import { env } from "~/env/client";
-// import { siteTitle, siteUrl } from "~/env";
 import type { Maybe, SanityImageProps } from "~/types";
 import { buildImageUrl } from "../sanity/image";
 import type {

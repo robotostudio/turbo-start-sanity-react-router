@@ -2,7 +2,6 @@
 import * as queryStore from "@sanity/react-loader";
 import { env } from "~/env/client";
 import { serverEnv } from "~/env/server";
-// import { studioUrl } from "~/env";
 import { client } from "./client";
 
 const clientWithToken = client.withConfig({

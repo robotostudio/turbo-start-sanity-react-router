@@ -1,6 +1,5 @@
 import { createClient } from "@sanity/client";
 import { env } from "~/env/client";
-// import { apiVersion, dataset, projectId } from "~/env";
 
 export const client = createClient({
   projectId: env.VITE_SANITY_PROJECT_ID,

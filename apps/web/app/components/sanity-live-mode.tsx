@@ -1,6 +1,5 @@
 import { useLiveMode } from "@sanity/react-loader";
 import { env } from "~/env/client";
-// import { studioUrl } from "~/env";
 
 import { client } from "~/lib/sanity/client";
 
