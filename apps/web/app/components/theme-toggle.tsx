@@ -1,24 +1,37 @@
+import { Button } from "@workspace/ui/components/button";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
-import { useFetcher } from "react-router";
+import { useTheme } from "./theme-provider";
 
-import type { ThemePreference } from "~/types/themePreference";
-
-export function ThemeToggle(props: { theme: ThemePreference }) {
-  const cookieToggle = useFetcher();
-  const isDarkMode = props.theme === "dark";
+export function ModeToggle() {
+  const { setTheme } = useTheme();
 
   return (
-    <cookieToggle.Form action="/resource/toggle-theme" method="post">
-      <button disabled={cookieToggle.state === "submitting"} type="submit">
-        {isDarkMode ? (
-          <Sun className="h-auto w-4" />
-        ) : (
-          <Moon className="h-auto w-4" />
-        )}
-        <div className="sr-only select-none">
-          {isDarkMode ? "Light" : "Dark"} Mode
-        </div>
-      </button>
-    </cookieToggle.Form>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size="icon" variant="outline">
+          <Sun className="dark:-rotate-90 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
