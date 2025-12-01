@@ -1,24 +1,23 @@
 import {
-  data,
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
-import {
-  apiVersion,
-  dataset,
-  projectId,
-  siteTitle,
-  siteUrl,
-  studioUrl,
-} from "./env";
+import { env } from "./env/client";
+// import {
+//   apiVersion,
+//   dataset,
+//   projectId,
+//   siteTitle,
+//   siteUrl,
+//   studioUrl,
+// } from "./env";
 
 export const links: Route.LinksFunction = () => [
   // DNS prefetch for faster resource loading
@@ -42,20 +41,20 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export const loader = async () =>
-  data({
-    ENV: {
-      VITE_SANITY_PROJECT_ID: projectId,
-      VITE_SANITY_DATASET: dataset,
-      VITE_SANITY_API_VERSION: apiVersion,
-      VITE_SANITY_STUDIO_URL: studioUrl,
-      VITE_SITE_URL: siteUrl,
-      VITE_SITE_TITLE: siteTitle,
-    },
-  });
+// export const loader = async () =>
+//   data({
+//     ENV: {
+//       VITE_SANITY_PROJECT_ID: env.VITE_SANITY_PROJECT_ID,
+//       VITE_SANITY_DATASET: env.VITE_SANITY_DATASET,
+//       VITE_SANITY_API_VERSION: env.VITE_SANITY_API_VERSION,
+//       VITE_SANITY_STUDIO_URL: env.VITE_SANITY_STUDIO_URL,
+//       VITE_SITE_URL: env.VITE_SITE_URL,
+//       VITE_SITE_TITLE: env.VITE_SITE_TITLE,
+//     },
+//   });
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { ENV } = useLoaderData<typeof loader>();
+  // const { ENV } = useLoaderData<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -68,13 +67,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        <script
+        {/*<script
           //biome-ignore lint/security/noDangerouslySetInnerHtml: public env
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(ENV)}`,
           }}
           key="env"
-        />
+        />*/}
       </body>
     </html>
   );
@@ -88,14 +87,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
+  const NOT_FOUND = 404;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === NOT_FOUND ? "404" : "Error";
     details =
-      error.status === 404
+      error.status === NOT_FOUND
         ? "The requested page could not be found."
         : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  } else if (env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }
