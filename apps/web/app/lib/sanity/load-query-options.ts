@@ -1,5 +1,7 @@
 import type { loadQuery } from "@sanity/react-loader";
-import { studioUrl } from "~/env";
+import { env } from "~/env/client";
+import { serverEnv } from "~/env/server";
+// import { studioUrl } from "~/env";
 import { client } from "./client";
 import { getSession } from "./session";
 
@@ -12,7 +14,7 @@ export async function loadQueryOptions(
   const previewSession = await getSession(headers.get("Cookie"));
   const preview = previewSession.get("projectId") === client.config().projectId;
 
-  if (preview && !process.env.SANITY_API_READ_TOKEN) {
+  if (preview && !serverEnv.SANITY_API_READ_TOKEN) {
     throw new Error(
       `Cannot activate preview mode without a "SANITY_API_READ_TOKEN" token in your environment variables. \n\n
       Create one with "Viewer" permissions at\n\n
@@ -24,7 +26,9 @@ export async function loadQueryOptions(
     preview,
     options: {
       perspective: preview ? "previewDrafts" : "published",
-      stega: preview ? { enabled: true, studioUrl } : undefined,
+      stega: preview
+        ? { enabled: true, studioUrl: env.VITE_SANITY_STUDIO_URL }
+        : undefined,
     },
   };
 }
