@@ -1,6 +1,6 @@
 import type { Config } from "@react-router/dev/config";
 import { vercelPreset } from "@vercel/react-router/vite";
-import { prerenderPages } from "./prerender-pages";
+import { prerenderPages } from "prerender-pages";
 
 export default {
   // Config options...
