@@ -14,7 +14,7 @@ import type {
 import { SanityButtons } from "./elements/sanity-buttons";
 import { SanityIcon } from "./elements/sanity-icon";
 import { Logo } from "./logo";
-
+import { ModeToggle } from "./theme-toggle";
 
 // Type helpers using utility types
 type NavigationData = {
@@ -26,11 +26,10 @@ type NavColumn = NonNullable<
   NonNullable<QueryNavbarDataResult>["columns"]
 >[number];
 
-type ColumnLink = Extract<NavColumn, { type: "column" }>["links"] extends Array<
-  infer T
->
-  ? T
-  : never;
+type ColumnLink =
+  Extract<NavColumn, { type: "column" }>["links"] extends Array<infer T>
+    ? T
+    : never;
 
 type MenuLinkProps = {
   name: string;
@@ -218,7 +217,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
                           <ChevronDown
                             className={cn(
                               "size-3 transition-transform",
-                              isDropdownOpen && "rotate-180"
+                              isDropdownOpen && "rotate-180",
                             )}
                           />
                         </button>
@@ -247,7 +246,7 @@ function MobileMenu({ navbarData, settingsData }: NavigationData) {
               {/* Action buttons */}
               <div className="grid gap-3 border-t pt-4">
                 <div className="flex justify-center">
-                  {/* <ModeToggle /> */}
+                  <ModeToggle />
                 </div>
                 <SanityButtons
                   buttonClassName="w-full justify-center"
@@ -318,7 +317,7 @@ export function Navbar({
       refreshInterval: 30_000,
       errorRetryCount: 3,
       errorRetryInterval: 5000,
-    }
+    },
   );
 
   const navigationData = data || {
@@ -366,7 +365,7 @@ export function Navbar({
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-4 md:flex">
-            {/* <ModeToggle /> */}
+            <ModeToggle />
             <SanityButtons
               buttonClassName="rounded-lg"
               buttons={buttons || []}
