@@ -6,10 +6,6 @@ import { commitSession, getSession } from "~/lib/sanity/session";
 import type { Route } from "./+types/enable";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  if (!serverEnv.SANITY_API_READ_TOKEN) {
-    throw new Response("Preview mode missing token", { status: 401 });
-  }
-
   const clientWithToken = client.withConfig({
     token: serverEnv.SANITY_API_READ_TOKEN,
   });

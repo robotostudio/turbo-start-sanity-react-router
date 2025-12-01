@@ -8,10 +8,6 @@ export const PREVIEW_SESSION_NAME = "__preview";
  */
 const isProduction = serverEnv.NODE_ENV === "production";
 
-if (!serverEnv.SANITY_SESSION_SECRET) {
-  throw new Error("Missing SANITY_SESSION_SECRET in .env");
-}
-
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
     cookie: {
