@@ -39,20 +39,26 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-    root.classList.remove("light", "dark");
+    const applyTheme = () => {
+      root.classList.remove("light", "dark");
+
+      if (theme === "system") {
+        const systemTheme = mediaQuery.matches ? "dark" : "light";
+        root.classList.add(systemTheme);
+      } else {
+        root.classList.add(theme);
+      }
+    };
+
+    applyTheme();
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
+        mediaQuery.addEventListener("change", applyTheme);
+        return () => mediaQuery.removeEventListener("change", applyTheme);
 
-      root.classList.add(systemTheme);
-      return;
     }
-
-    root.classList.add(theme);
   }, [theme]);
 
   const value = {
