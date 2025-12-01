@@ -14,7 +14,7 @@ type ThemeProviderState = {
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
-  undefined
+  undefined,
 );
 
 export function ThemeProvider({
@@ -55,9 +55,8 @@ export function ThemeProvider({
     applyTheme();
 
     if (theme === "system") {
-        mediaQuery.addEventListener("change", applyTheme);
-        return () => mediaQuery.removeEventListener("change", applyTheme);
-
+      mediaQuery.addEventListener("change", applyTheme);
+      return () => mediaQuery.removeEventListener("change", applyTheme);
     }
   }, [theme]);
 
