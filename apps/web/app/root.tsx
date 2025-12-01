@@ -11,6 +11,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
+import { ThemeProvider } from "./components/theme-provider";
 import {
   apiVersion,
   dataset,
@@ -65,7 +66,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
         <script
