@@ -1,3 +1,4 @@
+// DON'T USE ABSOLUTE PATHS & CUSTOM ENV'S
 import { createClient } from "@sanity/client";
 import { queryAllPagesDataForPrerender } from "./app/lib/sanity/queries";
 

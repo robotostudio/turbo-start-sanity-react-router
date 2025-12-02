@@ -1,5 +1,5 @@
 import { stegaClean } from "@sanity/client/stega";
-import { siteTitle, siteUrl } from "~/env";
+import { env } from "~/env/client";
 import type { Maybe, SanityImageProps } from "~/types";
 import { buildImageUrl } from "../sanity/image";
 import type {
@@ -46,21 +46,22 @@ export function transformSeoData(data: SeoDataResult): SeoData {
 /**
  * Utilities
  */
-const getCanonicalUrl = (pathname: string): string => `${siteUrl}${pathname}`;
+const getCanonicalUrl = (pathname: string): string =>
+  `${env.VITE_SITE_URL}${pathname}`;
 
 /**
  * Components
  */
 export function MetaTags({ data: _data }: { data: SeoDataResult }) {
   const data = transformSeoData(_data);
-  const metaTitle = data.title ?? siteTitle;
+  const metaTitle = data.title ?? env.VITE_SITE_TITLE;
   const metaDescription = data.description ?? "";
-  const ogTitle = data.title ?? siteTitle;
+  const ogTitle = data.title ?? env.VITE_SITE_TITLE;
   const ogDescription = data.description ?? "";
   const canonicalUrl = getCanonicalUrl(data.slug ?? "/");
   const ogImageUrl = data.seoImage
     ? buildImageUrl(data.seoImage)
-    : `${siteUrl}/api/og?type=${data.contentType}&id=${data.contentId}`;
+    : `${env.VITE_SITE_URL}/api/og?type=${data.contentType}&id=${data.contentId}`;
 
   return (
     <>
@@ -76,7 +77,7 @@ export function MetaTags({ data: _data }: { data: SeoDataResult }) {
       {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
       {ogImageUrl && <meta content="1200" property="og:image:width" />}
       {ogImageUrl && <meta content="630" property="og:image:height" />}
-      <meta content={siteTitle} property="og:site_name" />
+      <meta content={env.VITE_SITE_TITLE} property="og:site_name" />
       {/* Twitter */}
       <meta content="summary_large_image" name="twitter:card" />
       <meta content={canonicalUrl} name="twitter:url" />
@@ -88,9 +89,10 @@ export function MetaTags({ data: _data }: { data: SeoDataResult }) {
 }
 
 function prepareBlogMetadata(data: NonNullable<QueryBlogSlugPageDataResult>) {
-  const metaTitle = data.seoTitle ?? data.title ?? siteTitle;
+  const metaTitle = data.seoTitle ?? data.title ?? env.VITE_SITE_TITLE;
   const metaDescription = data.seoDescription ?? data.description ?? "";
-  const ogTitle = data.ogTitle ?? data.seoTitle ?? data.title ?? siteTitle;
+  const ogTitle =
+    data.ogTitle ?? data.seoTitle ?? data.title ?? env.VITE_SITE_TITLE;
   const ogDescription =
     data.ogDescription ?? data.seoDescription ?? data.description ?? "";
   const canonicalUrl = getCanonicalUrl(data.slug ?? "/");
@@ -102,7 +104,7 @@ function prepareBlogMetadata(data: NonNullable<QueryBlogSlugPageDataResult>) {
   const modifiedTime = data._updatedAt;
   const ogImageUrl = data.seoImage
     ? buildImageUrl(data.seoImage)
-    : `${siteUrl}/api/og?type=blog&id=${data._id}`;
+    : `${env.VITE_SITE_URL}/api/og?type=blog&id=${data._id}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -115,7 +117,7 @@ function prepareBlogMetadata(data: NonNullable<QueryBlogSlugPageDataResult>) {
     author: authorName ? { "@type": "Person", name: authorName } : undefined,
     publisher: {
       "@type": "Organization",
-      name: siteTitle,
+      name: env.VITE_SITE_TITLE,
       // logo: siteLogo ? { "@type": "ImageObject", url: siteLogo } : undefined,
     },
   };
@@ -169,7 +171,7 @@ export function BlogMetaTags({
       )}
       {meta.ogImageUrl && <meta content="1200" property="og:image:width" />}
       {meta.ogImageUrl && <meta content="630" property="og:image:height" />}
-      <meta content={siteTitle} property="og:site_name" />
+      <meta content={env.VITE_SITE_TITLE} property="og:site_name" />
       {meta.publishedTime && (
         <meta
           content={meta.publishedTime}

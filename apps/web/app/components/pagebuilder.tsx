@@ -6,7 +6,7 @@ import {
 } from "@sanity/visual-editing/react";
 
 import { useCallback, useMemo } from "react";
-import { dataset, projectId, studioUrl } from "~/env";
+import { env } from "~/env/client";
 import type { QueryHomePageDataResult } from "~/lib/sanity/sanity.types";
 import type { PageBuilderBlockTypes } from "~/types";
 import { CTABlock } from "./sections/cta";
@@ -50,9 +50,9 @@ const BLOCK_COMPONENTS = {
 function createSanityDataAttribute(config: SanityDataAttributeConfig): string {
   return createDataAttribute({
     id: config.id,
-    baseUrl: studioUrl,
-    projectId,
-    dataset,
+    baseUrl: env.VITE_SANITY_STUDIO_URL,
+    projectId: env.VITE_SANITY_PROJECT_ID,
+    dataset: env.VITE_SANITY_DATASET,
     type: config.type,
     path: config.path,
   }).toString();
