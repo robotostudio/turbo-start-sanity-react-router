@@ -1,5 +1,5 @@
 import { buildSrc, type WrapperProps } from "sanity-image";
-import { dataset, projectId } from "~/env";
+import { env } from "~/env/client";
 import type { SanityImageProps as SanityImageData } from "~/types";
 
 type ImageHotspot = {
@@ -27,7 +27,7 @@ export type SanityImageProps = {
 
 // Base URL construction
 export const SANITY_BASE_URL =
-  `https://cdn.sanity.io/images/${projectId}/${dataset}/` as const;
+  `https://cdn.sanity.io/images/${env.VITE_SANITY_PROJECT_ID}/${env.VITE_SANITY_DATASET}/` as const;
 
 // Type guards
 function isValidNumber(value: unknown): value is number {
