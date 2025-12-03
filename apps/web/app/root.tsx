@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "@workspace/ui/globals.css";
+import { ThemeProvider } from "./components/theme-provider";
 import { env } from "./env/client";
 
 export const links: Route.LinksFunction = () => [
@@ -41,9 +42,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <Meta />
         <Links />
+        <script
+          //biome-ignore lint/security/noDangerouslySetInnerHtml: theme initialization script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const storageKey = 'vite-ui-theme';
+                const defaultTheme = 'system';
+                const storedTheme = localStorage.getItem(storageKey);
+                const theme = storedTheme || defaultTheme;
+                
+                const root = document.documentElement;
+                root.classList.remove('light', 'dark');
+                
+                if (theme === 'system') {
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  root.classList.add(systemTheme);
+                } else {
+                  root.classList.add(theme);
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body>
-        {children}
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
