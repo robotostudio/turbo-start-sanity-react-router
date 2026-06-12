@@ -1,13 +1,14 @@
-# Turborepo starter
+# Turbo Start Sanity React Router
 
-This Turborepo starter is maintained by the Turborepo core team.
+Turbo Start Sanity React Router is a free, open-source Sanity template: a Vite + React Router page builder starter with visual editing and a Turborepo monorepo structure. Built by [Roboto Studio](https://robotostudio.com) as the React Router port of [turbo-start-sanity](https://github.com/robotostudio/turbo-start-sanity).
 
-## Using this example
+Demo: [react-router.robotostudio.com](https://react-router.robotostudio.com/)
 
-Run the following command:
+## Getting started
 
 ```sh
-npx create-turbo@latest
+pnpm install
+pnpm dev
 ```
 
 ## What's inside?
@@ -16,11 +17,11 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `web`: a [React Router](https://reactrouter.com/) app built with [Vite](https://vite.dev/)
+- `studio`: a [Sanity Studio](https://www.sanity.io/studio) for editing content
+- `@workspace/ui`: a shared React component library
+- `@workspace/utils`: shared utilities
+- `@workspace/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
@@ -29,8 +30,7 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 This Turborepo has some additional tools already setup for you:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- [Biome](https://biomejs.dev/) via [Ultracite](https://www.ultracite.ai/) for linting and formatting
 
 ### Build
 
